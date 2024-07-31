@@ -1,1 +1,5 @@
+# Virtual Environments
 .venv
+
+# poetry
+poetry.lock
