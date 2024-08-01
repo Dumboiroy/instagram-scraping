@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "instagram-scraper"
+name = "instagram-scraping"
 version = "0.1.0"
 description = ""
 authors = ["Alroy"]
