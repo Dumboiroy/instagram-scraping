@@ -2,6 +2,7 @@ from time import sleep
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+import pandas as pd
 
 
 def scrape(email_login, password_login, post_url):
@@ -69,16 +70,20 @@ def scrape(email_login, password_login, post_url):
 
         # getting all comments
         try:
-            comment_classes = "x9f619 xjbqb8w x78zum5 x168nmei x13lgxp2 x5pf9jr xo71vjh x1uhb9sk x1plvlek xryxfnj x1c4vz4f x2lah0s xdt5ytf xqjyukv x1qjc9v5 x1oa3qoh x1nhvcw1"
+            comment_classes = "x9f619 xjbqb8w x78zum5 x168nmei x13lgxp2 x5pf9jr xo71vjh x1uhb9sk x1plvlek xryxfnj x1iyjqo2 x2lwn1j xeuugli x1q0g3np xqjyukv x1qjc9v5 x1oa3qoh x1nhvcw1"
             comments = browser.find_elements(
                 By.CSS_SELECTOR, f"div[class*='{comment_classes}']"
             )
-            print("Found comments:", len(comments))
-            with open("data/comments.txt", "w", encoding="utf-8") as f:
-                print("Writing comments to file.")
-                for comment in comments:
-                    f.write(comment.text + "\n")
-                print("Comments written to file.")
+            print("Found elements:", len(comments))
+            # saving comments
+            data = []
+            for comment in comments:
+                data.append(comment.text)
+            df = pd.DataFrame(data, columns=["Comments"])
+            df = df.drop(index=0)
+            df = df['Comments'].str.split('\n', expand=True)
+            df.to_csv("data/comments.csv", index=False)
+
         except Exception as e:
             print("Error finding comments:", repr(e))
 

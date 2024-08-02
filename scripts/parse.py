@@ -5,13 +5,13 @@ with open(comments_file, "r", encoding="utf-8") as f:
 
 # skip first 25 lines
 comments = comments[25:]
-# skip last 10 lines
-comments = comments[:-10]
+# skip last 8 lines
+comments = comments[:-8]
 
-# skipping view all replies
+# skipping view all replies and likes
 comments_1 = []
 for line in comments:
-    if line.startswith("View all "):
+    if line.startswith("View all ") or line.endswith("like\n") or line.endswith("likes\n"):
         # print("Skipping comment:", line)
         continue
     comments_1.append(line)
